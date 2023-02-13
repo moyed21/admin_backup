@@ -8,4 +8,5 @@
             <attr sel="#admin-type" th:text="${adminUser.adminType}"/>
             <attr sel="#admin-id" th:text="${adminUser.adminId}"/>
     </attr>
+    <attr sel="#infoUpdate" th:href="@{'/hradmin/updateaccount/'+${adminUser.adminIdx}}"/>
 </thlogic>

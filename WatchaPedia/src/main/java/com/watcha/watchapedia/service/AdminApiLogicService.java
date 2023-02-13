@@ -110,6 +110,29 @@ public class AdminApiLogicService extends BaseService<AdminApiRequest, AdminApiR
             return Header.OK();
         }).orElseGet(() -> Header.ERROR("데이터 없음"));
     }
+    public Header<AdminApiResponse> updateAdmins(Header<AdminApiRequest> request){
+        System.out.println("AdminRepository update 실행");
+        AdminApiRequest adminApiRequest = request.getData();
+
+        Optional<AdminUser> admins = adminRepository.findById(adminApiRequest.getAdminIdx());
+        System.out.println("admin Idx :" +adminApiRequest.getAdminIdx());
+        System.out.println("원래비번 :" +admins.get().getAdminPw());
+        System.out.println("새로운비번 :" +adminApiRequest.getAdminPw());
+
+        return admins.map(
+                        admin -> {
+                            admin.setAdminPw(adminApiRequest.getAdminPw());
+                            admin.setAdminName(adminApiRequest.getAdminName());
+                            admin.setAdminType(adminApiRequest.getAdminType());
+
+                            return admin;
+
+                        }).map(admin -> adminRepository.save(admin))
+                .map(admin -> response(admin)).map(Header::OK)
+                .orElseGet(() -> Header.ERROR("데이터 없읍")
+                );
+
+    }
 
 
 }

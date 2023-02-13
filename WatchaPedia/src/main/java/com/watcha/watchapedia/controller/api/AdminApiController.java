@@ -58,4 +58,9 @@ public class AdminApiController extends CrudController<AdminApiRequest, AdminApi
     public Header<AdminApiResponse> delete(Long id) {
         return super.delete(id);
     }
+
+    @PostMapping("/updateaccount")
+    public Header<AdminApiResponse> updateAccount(@RequestBody Header<AdminApiRequest> request) {
+        return adminApiLogicService.updateAdmins(request);
+    }
 }
